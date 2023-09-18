@@ -4,7 +4,7 @@ The assignment has been divided in two parts and could have led to a maximum of 
 
 The basic idea is to create a Tamagotchi game on a Landtiger board, using the peripherals available on the board and Keil uVision5. Each part of the assignment was about the usage of a different aspect of the board. The first part focus has been the usage of the embedded LCD display, timers and joystick. The second part focus has been the usage of the embedded speaker, potentiometer and touchscreen.
 <p align="center">
-  <img width=500px src="https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/e07bd476-6b64-4263-8542-9193baea286b" />
+  <img width=500px src="https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/211dcd73-189f-481e-818b-12d8ad0dc61e" />
 </p>
 
 
@@ -21,7 +21,7 @@ Yes, it does, but with some [limitations](#Limitations). You can see some scenar
 For the audio, you can only trust me and utmost pick a random sound from your brain and play it for each action and event, it will feel the same.
 | Idle       |      Snack/Meal (left, right and joystick button) | Cuddle (touchscreen) | Volume ON/OFF (potentiometer) | Game Over |
 |:----------:|:-------------:|:---:|:---:|:---:|
-|![idle](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/720710c9-b961-4471-b6df-b015113673a4)| ![snack-meal](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/ee0ff0bb-7ad6-45aa-964f-b4a94ae98b88)|![cuddle](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/453d602c-9a9c-473f-bdfa-d8807bd0eb9e) | ![volume](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/e6a69c8d-2a93-4e0a-908f-6aa2aed28527) | ![game-over](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/7efd102a-bd62-492d-b989-32650b202193)|
+|![idle](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/3f68f3f2-9d72-4646-a166-9796fc9bfad2)| ![snack-meal](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/4ff7e9c7-23f9-4855-a527-3b2c09772aca)| ![cuddle](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/5e6fd63e-323d-403f-aa0e-7edff28376e4)| ![volume](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/d62d2f70-00d7-4405-8cc1-dd41d1dd173e) | ![game-over](https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/9f9f490e-2bff-4fc3-8914-91122b08dfd1)|
 
 ## Limitations
 The code is quite big, the free license won't be enough to run it. You have to get it somehow. In my case, the university provides a license for the students, I just had to follow the instructions provided by the professor.
@@ -67,8 +67,9 @@ During the rendering phase, part of the next frame will be computed using the **
 
 You can see the actual effect if you put a random color for each draw to the “cleaning mask” obtained with the “dirty areas”. You don't have to clean and write the whole display, hence the flickering is not perceived, and the time required to draw a new frame on the slow display is reduced:
 <p align="center">
-<img width=200px src="https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/e47bbdc1-a83f-4975-9365-610edc0a289e"/>
+  <img width=200px src="https://github.com/attilio-oliva/tamagotchi-landtiger/assets/75045331/d250d6fb-792e-44b7-a619-30012ae34fcf"/>
 </p>
+
 
 ### Wow, the actual sounds are destroying my ears, how did you do it?
 I'd like to express my gratitude to [ThePseudo](https://github.com/ThePseudo) for his [example project](https://github.com/ThePseudo/Music_for_Landtiger) on how to play some music on the Landtiger board. I used his code as a base for my implementation and had to modify it a bit to make it work with my code, but it was a good starting point.
