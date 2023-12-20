@@ -12,7 +12,7 @@ The basic idea is to create a Tamagotchi game on a Landtiger board, using the pe
 For the not so old people, Tamagotchi is a game about a pet that you have to take care of. You have to feed it, play with it and make sure it doesn't get sick. If you don't take care of it, it will die.
 
 ## Ok, but what is a Landtiger board?
-The Landtiger board is a development board based on the NXP LPC1768 microcontroller. It has a lot of peripherals, such as an LCD display, a speaker, a potentiometer, a joystick and a touchscreen. It has a 64KB SRAM, 512KB on-chip Flash memory for storage, and it can be programmed using the [Keil uVision IDE](https://www.keil.com/demo/eval/arm.htm).
+The Landtiger board is a development board based on the NXP LPC1768 microcontroller. It has a lot of peripherals, such as an LCD display, a speaker, a potentiometer, a joystick and a touchscreen. It has a 64kB SRAM, 512kB on-chip Flash memory for storage, and it can be programmed using the [Keil uVision IDE](https://www.keil.com/demo/eval/arm.htm).
 
 **NOTE**: the board is not available for purchase anymore, but the university still has quite a lot of them.
 
@@ -26,7 +26,7 @@ For the audio, you can only trust me and utmost pick a random sound from your br
 ## Limitations
 The code is quite big, the free license won't be enough to run it. You have to get it somehow. In my case, the university provides a license for the students, I just had to follow the instructions provided by the professor.
 
-The resulting application is quite big, so it won't fit on a 32KB SRAM board. You'll need at least 64KB RAM.
+The resulting application is quite big, so it won't fit on a 32kB SRAM board. You'll need at least 64kB RAM.
 
 These limitations are due to the various assets used in the game for the animations. These assets are statically loaded on the RAM, so they take up a lot of space. I tried to optimize the code as much as possible, but I couldn't do much more. The only other way at this point would have been some kind of dynamic loading, or asset generation at runtime, but I didn't have nor the will nor time to implement it.
 
@@ -34,15 +34,15 @@ You should also make sure that you are compiling with -O0, otherwise the game ma
 
 **NOTES for my fellow students**:
 - some Landtiger boards provided by the university could have some non-properly working peripherals. In this case, you can ask for a replacement.
-- **BEWARE**: for some reason, the university has some old boards version with only 32KB of SRAM. This is **not enough** to run the game. In this case, the display will not render anything, but it is not broken whatsoever. You can ask for a replacement anyway.
+- **BEWARE**: for some reason, the university has some old boards version with only 32kB of SRAM. This is **not enough** to run the game. In this case, the display will not render anything, but it is not broken whatsoever. You can ask for a replacement anyway.
 
 ## How does it work?
 The game uses a tiny ECS framework embedded for the game logic. The framework is quite simple, but it gets the job done. This allowed the game to be quite modular and easy to extend (useful for the second part of the assignment).
 
 The game is divided in 3 main parts:
 - **Game init** ([game.c](game/game.c)): this is the initialization part of the game. It creates all the entities and systems needed for the game to run, and it starts the game loop (by initializing the timers). The main game loop is handled by the `RIT` timer.
-- **Game loop** ([IRQ_timer.c](IRQ/IRQ_timer.c)): this is the main game loop. It is called by the `RIT` timer each 50 ms (editable in `engine/globals.h` with `RIT_INTERVAL_IN_MILLISECONDS`). It handles the game logic (systems) and the input from the joystick and the touchscreen. Furthermore, it also handles the rendering of the entities on the screen. Each loop call between frame drawings are called **tick**. A tick is increased in each loop and then resets to 0 after a frame render call. In each loop call the game logic, the input and the sound are handled, meanwhile the rendering is handled only after several ticks.
-- **Render** ([renderer.c](manager/renderer.c)): this is the rendering part of the game. It handles the rendering of the entities on the screen. It is periodically used by the `RIT` timer to draw a frame each 500 ms. You can tweak this value by changing the `FRAME_TIME_IN_MILLISECONDS` macro in `engine/global.h`.
+- **Game loop** ([IRQ_RIT.c](RIT/IRQ_RIT.c)): this is the main game loop. It is called by the `RIT` timer each 50 ms (editable in `engine/globals.h` with `RIT_INTERVAL_IN_MILLISECONDS`). It handles the game logic (systems) and the input from the joystick and the touchscreen. Furthermore, it also handles the rendering of the entities on the screen. Each loop call between frame drawings are called **tick**. A tick is increased in each loop and then resets to 0 after a frame render call. In each loop call the game logic, the input and the sound are handled, meanwhile the rendering is handled only after several ticks.
+- **Render** ([renderer.c](engine/renderer.c)): this is the rendering part of the game. It handles the rendering of the entities on the screen. It is periodically used by the `RIT` timer to draw a frame each 500 ms. You can tweak this value by changing the `FRAME_TIME_IN_MILLISECONDS` macro in `engine/global.h`.
 
 ### Is it just me or the code can get messy?
 Yes.
@@ -56,7 +56,7 @@ The most messed up part is the rendering one. I had to implement some workaround
 I implemented some workaround to avoid the **flickering** and the display slowness while avoiding previous frame pixel traces. For this purpose, I should have implemented something like a double buffering system to make it work. What I came up with is what like to call with the *“poor man's double buffering”*.
 Normally, the double buffering is used to render the next frame on a different buffer, and then swap the buffers when the rendering is done. This way, the screen will always show a complete frame, and not a partial one (flickering effect). This is done by using two buffers, one for the current frame(inside the display) and one for the next frame (in RAM). When the rendering is done, the buffers are swapped. This is a very common technique used in games and other applications.
 
-Then why didn't you just do that? Well, the RAM is not enough to save a whole frame with a resolution of 320×240 pixels and 2 Bytes per pixel (RGB 565). The available RAM is only 64 KB, and the buffer size would be 320×240×2 bytes (153 600 bytes). So I had to come up with something else.
+Then why didn't you just do that? Well, the RAM is not enough to save a whole frame with a resolution of 320×240 pixels and 2 Bytes per pixel (RGB 565). The available RAM is only 64 kB, and the buffer size would be 320×240×2 bytes (153 600 bytes). So I had to come up with something else.
 
 We cannot just put every pixel info in a buffer, so we just have to compress it somehow. What I came up is to use two structures:
 - **render_buffer**: an in-RAM buffer with only a portion of the screen that will be rendered.
